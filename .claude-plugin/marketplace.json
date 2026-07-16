@@ -1,0 +1,15 @@
+{
+  "name": "agent-dynamo",
+  "description": "Official Claude Code plugins for the Agent Dynamo platform",
+  "owner": {
+    "name": "Agent Dynamo",
+    "email": "support@agentdynamo.com"
+  },
+  "plugins": [
+    {
+      "name": "agent-authoring",
+      "source": "./plugins/agent-authoring",
+      "description": "Author and run Agent Dynamo agents, workflows, and work queues from Claude Code"
+    }
+  ]
+}

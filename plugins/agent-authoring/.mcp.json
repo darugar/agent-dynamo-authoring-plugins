@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "agent-dynamo": {
+      "type": "http",
+      "url": "https://app.agentdynamo.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${AGENTDYNAMO_API_KEY}"
+      }
+    }
+  }
+}

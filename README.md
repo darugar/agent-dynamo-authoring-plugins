@@ -39,6 +39,25 @@ automatically, along with an `agent-authoring` skill that guides spec writing.
 Try: *"Create an agent that summarizes a URL I give it, then run it on
 example.com"*.
 
+## Headless & CI use
+
+Interactive sessions prompt for tool permissions the first time — nothing to
+configure. But non-interactive runs (`claude -p`, the Agent SDK, CI) and
+shared permission allowlists in `.claude/settings.json` must name the tools
+explicitly, and plugin-bundled MCP servers get a namespaced permission scope
+(`plugin_<plugin>_<server>`), not the server name alone:
+
+```bash
+claude -p "List my Agent Dynamo agents" \
+  --allowedTools "mcp__plugin_agent-authoring_agent-dynamo__*"
+```
+
+Two gotchas: a bare `mcp__*` wildcard is rejected (allow rules must name a
+server scope; globs are only valid in the tool position), and allowlists
+written for a manually added server (`mcp__agent-dynamo__*` via
+`claude mcp add`) do not match the plugin's tools. Hook matchers follow the
+same scoped naming.
+
 ## Troubleshooting
 
 - **"Missing Authorization header"** — `AGENTDYNAMO_API_KEY` isn't set in the

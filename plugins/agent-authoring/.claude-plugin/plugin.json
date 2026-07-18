@@ -1,7 +1,7 @@
 {
   "name": "agent-authoring",
   "description": "Agent Dynamo authoring: AgentSpec YAML, workflow agents, sub-agents, and work queues, connected to app.agentdynamo.com",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "Agent Dynamo"
   },

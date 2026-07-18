@@ -1,6 +1,6 @@
 ---
 name: agent-authoring
-description: Author, update, or run agents/work queues on the Agent Dynamo platform (AgentSpec YAML, workflow steps, memory between steps, sub-agents). Use whenever writing or editing an AgentSpec, designing a workflow agent, or debugging an agent run.
+description: Author, update, or run agents/work queues on the Agent Dynamo platform (AgentSpec YAML, workflow steps, dataflow between steps, sub-agents). Use whenever writing or editing an AgentSpec, designing a workflow agent, or debugging an agent run.
 ---
 
 # Authoring Agent Dynamo agents
@@ -26,7 +26,7 @@ connectors — take the same URL + header.)
 
 1. **Call the `authoring_guide` tool first** — it is the canonical reference
    for AgentSpec fields, workflow execution semantics (step ordering,
-   prompt/memory flow between steps, sub-agent mechanisms), work-queue specs,
+   prompt/output flow between steps, artifacts, sub-agent mechanisms), work-queue specs,
    and the full tool loop. Do not author from assumptions.
 2. Call `building_blocks` before writing any spec — never guess model ids,
    tool names, or MCP server names. `spec_schema` returns the JSON Schemas
@@ -42,3 +42,8 @@ connectors — take the same URL + header.)
   `execution_id` (for `execution_log`).
 - `spec_schema`, `validate_spec`, and `authoring_guide` work without a key;
   everything else requires your Bearer key.
+- Older specs used `memory_inputs`/`memory_output` on steps; those fields are
+  removed and rejected with a migration hint. Use `context_from: [step-ids]`
+  (the step receives those outputs in context) and `emit: last_tool_result`
+  (the step outputs its raw tool result) instead. Don't narrate mem://
+  mechanics in step instructions — the platform injects that guidance.

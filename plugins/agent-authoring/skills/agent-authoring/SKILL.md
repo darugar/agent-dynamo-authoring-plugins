@@ -1,6 +1,6 @@
 ---
 name: agent-authoring
-description: Author, update, or run agents/work queues on the Agent Dynamo platform (AgentSpec YAML, workflow steps, dataflow between steps, sub-agents). Use whenever writing or editing an AgentSpec, designing a workflow agent, or debugging an agent run.
+description: Author, update, or run agents/work queues on the Agent Dynamo platform (AgentSpec YAML, workflow steps, dataflow between steps, sub-agents, sandboxed custom tools). Use whenever writing or editing an AgentSpec, designing a workflow agent, creating a custom tool for an agent, or debugging an agent run.
 ---
 
 # Authoring Agent Dynamo agents
@@ -50,6 +50,28 @@ client takes the same URL (`/mcp` exactly — no trailing slash) with an
    (reference resolution) → `apply_spec` (same slug = new version) →
    `run_agent(slug, prompt, wait=True)` → `execution_log(execution_id)` to
    inspect step-by-step behavior.
+
+## Sandboxed dynamic tools (custom tools)
+
+When an agent needs a capability no native tool or MCP server provides and
+it's a pure computation (parse/transform/extract — no network or disk), write
+a **sandboxed tool**: a small Python program run in a secure sandbox, stored
+and versioned per account.
+
+1. **Call the `sandboxed_tool_guide` tool first** — the sandbox is a
+   restricted Python subset with a script-style contract (parameters arrive
+   as variables, the last expression is the result). Do not write tool code
+   from assumptions.
+2. Iterate: `validate_sandboxed_tool` (parse check) → `test_sandboxed_tool`
+   (your test cases run in the real sandbox) → `upsert_sandboxed_tool`
+   (each save is a new immutable version) → `publish_sandboxed_tool`
+   (agents only ever run the published version; publishing an older version
+   number rolls back).
+3. Reference the published tool from a spec via `sandboxed_tools: [name]`
+   (listed in `building_blocks` too).
+
+Tools needing HTTP calls are not sandboxed-tool material — give the agent
+the `http_request` native tool or an MCP server instead.
 
 ## Gotchas
 

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "agent-dynamo": {
+      "url": "https://app.agentdynamo.com/mcp",
+      "bearer_token_env_var": "AGENTDYNAMO_API_KEY"
+    }
+  }
+}

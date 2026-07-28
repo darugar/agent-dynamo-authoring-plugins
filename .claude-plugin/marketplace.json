@@ -1,6 +1,6 @@
 {
   "name": "agent-dynamo",
-  "description": "Official Claude Code plugins for the Agent Dynamo platform",
+  "description": "Official coding-harness plugins for the Agent Dynamo platform",
   "owner": {
     "name": "Agent Dynamo",
     "email": "support@agentdynamo.com"

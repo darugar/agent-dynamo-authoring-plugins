@@ -12,15 +12,43 @@ no local install or repo checkout needed.
 
 ## Connect (once)
 
+With the **agent-authoring** plugin installed, the `agent-dynamo` MCP server is
+already registered. Export your key and restart the harness:
+
 ```bash
+export AGENTDYNAMO_API_KEY=ad_...
+```
+
+Without the plugin, register the server by hand as a streamable-HTTP server:
+
+```bash
+# Claude Code
 claude mcp add --transport http agent-dynamo https://app.agentdynamo.com/mcp \
   --header "Authorization: Bearer ad_..."
+
+# Codex
+codex mcp add agent-dynamo --url https://app.agentdynamo.com/mcp \
+  --bearer-token-env-var AGENTDYNAMO_API_KEY
 ```
 
 Mint the `ad_...` key in the Agent Dynamo web app under **Settings → API
-keys**. Use `/mcp` exactly — no trailing slash. Every tool call runs as you,
-scoped to your account. (Other MCP clients — Cursor, claude.ai custom
-connectors — take the same URL + header.)
+keys**. Every tool call runs as you, scoped to your account. Any other MCP
+client takes the same URL (`/mcp` exactly — no trailing slash) with an
+`Authorization: Bearer ad_...` header.
+
+Working inside an app-repo checkout against a local instance? Register the
+server as a stdio process instead:
+
+```json
+{
+  "command": "uv",
+  "args": ["run", "python", "Lib/agent_authoring/server.py"],
+  "env": {
+    "AGENTDYNAMO_API_KEY": "ad_...",
+    "AGENTDYNAMO_BASE_URL": "http://local.agentdynamo.com:3000"
+  }
+}
+```
 
 ## Authoring
 

@@ -120,10 +120,18 @@ at its own file via `"mcpServers": "./.mcp.codex.json"`.
 
 ## Maintainers
 
-The skill's source of truth is `.claude/skills/agent-authoring/SKILL.md` in the
-app repo; `just publish-skill` copies it here and to the app repo's
-`.agents/skills/` mirror, and `just check-skill-sync` (wired into
-`just test-all`) fails on drift.
+**This repo owns the skill.** There is no copy in the app repo and nothing to
+sync. That works because the skill deliberately holds only stable procedure —
+"call `authoring_guide` first, look up real building-block names, then validate
+→ dry-run → apply → run → inspect" — while every version-specific detail
+reaches the model at runtime through the MCP tools the platform serves:
+`authoring_guide` (the full authoring reference), `building_blocks` (real model
+ids and tool names), `spec_schema` (live JSON Schema), and `validate_spec`'s
+error hints (including migration hints for removed spec fields).
+
+So a platform change usually needs **no release here**. Edit this skill only
+when the authoring *procedure* changes — a new step in the loop, a renamed
+tool, a changed connection story.
 
 To release: bump `version` in **both**
 `plugins/agent-authoring/.claude-plugin/plugin.json` and

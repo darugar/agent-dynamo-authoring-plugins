@@ -118,6 +118,26 @@ The two MCP files are not interchangeable: Claude Code uses
 uses `{"url": ..., "bearer_token_env_var": "VAR"}`. The Codex manifest points
 at its own file via `"mcpServers": "./.mcp.codex.json"`.
 
+**`${VAR}` interpolation is Claude-only.** Claude Code expands `${VAR}` and
+`${VAR:-default}` in `.mcp.json` at connect time, so its URL is
+`${AGENTDYNAMO_MCP_URL:-https://app.agentdynamo.com/mcp}` — set
+`AGENTDYNAMO_MCP_URL` to point the plugin at a different instance.
+
+Codex does **not** expand `${VAR}` in plugin MCP config; it passes the string
+through literally, and a URL containing `${...}` fails to connect at all. So
+`.mcp.codex.json` must hard-code the URL — do not copy the Claude pattern into
+it. A Codex user who needs a different endpoint registers the server by hand
+instead:
+
+```bash
+codex mcp add agent-dynamo --url https://your-instance.example.com/mcp \
+  --bearer-token-env-var AGENTDYNAMO_API_KEY
+```
+
+(Verified by pointing each harness at a local HTTP server and observing which
+URL it actually requested — `codex mcp get` and `claude mcp get` both *display*
+the uninterpolated string, so they cannot be used to test this.)
+
 ## Maintainers
 
 **This repo owns the skill.** There is no copy in the app repo and nothing to

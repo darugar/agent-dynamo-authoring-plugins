@@ -1,6 +1,6 @@
 {
   "name": "agent-authoring",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Agent Dynamo authoring: AgentSpec YAML, workflow agents, sub-agents, and work queues, connected to app.agentdynamo.com",
   "author": {
     "name": "Agent Dynamo"
@@ -22,7 +22,7 @@
   "interface": {
     "displayName": "Agent Dynamo Authoring",
     "shortDescription": "Author, run, and debug Agent Dynamo agents",
-    "longDescription": "Write AgentSpec YAML, apply it to the Agent Dynamo platform, run agents and work queues, and inspect step-by-step execution logs — without a local install or repo checkout. Connects to your Agent Dynamo account with an API key.",
+    "longDescription": "Write AgentSpec YAML, apply it to the Agent Dynamo platform, run agents and work queues, and inspect step-by-step execution logs. Agents run on the hosted platform — nothing to install or operate yourself. Connects to your Agent Dynamo account with an API key.",
     "developerName": "Agent Dynamo",
     "category": "Engineering",
     "capabilities": [

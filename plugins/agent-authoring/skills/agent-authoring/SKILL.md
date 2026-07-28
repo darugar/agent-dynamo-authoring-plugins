@@ -8,7 +8,8 @@ description: Author, update, or run agents/work queues on the Agent Dynamo platf
 Agent Dynamo is a hosted platform for LLM agents: single-prompt ("agentic")
 agents, multi-step workflow agents, sub-agents, and work queues. Everything is
 authored as AgentSpec YAML and managed through the `agent-dynamo` MCP server —
-no local install or repo checkout needed.
+nothing to install or run yourself. Agents execute on the platform, not on this
+machine.
 
 ## Connect (once)
 
@@ -35,20 +36,6 @@ Mint the `ad_...` key in the Agent Dynamo web app under **Settings → API
 keys**. Every tool call runs as you, scoped to your account. Any other MCP
 client takes the same URL (`/mcp` exactly — no trailing slash) with an
 `Authorization: Bearer ad_...` header.
-
-Working inside an app-repo checkout against a local instance? Register the
-server as a stdio process instead:
-
-```json
-{
-  "command": "uv",
-  "args": ["run", "python", "Lib/agent_authoring/server.py"],
-  "env": {
-    "AGENTDYNAMO_API_KEY": "ad_...",
-    "AGENTDYNAMO_BASE_URL": "http://local.agentdynamo.com:3000"
-  }
-}
-```
 
 ## Authoring
 
